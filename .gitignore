@@ -1,0 +1,32 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django database
+*.sqlite3
+*.db
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# IDE/editor files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Django migrations
+**/migrations/
+!**/migrations/__init__.py
