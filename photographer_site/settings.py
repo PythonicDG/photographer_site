@@ -90,7 +90,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+if os.name == 'nt':
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+else:
+    STATIC_ROOT = '/home/dipakgaikwadms/photography-backend/photographer_site/staticfiles/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
