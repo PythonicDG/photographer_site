@@ -3,7 +3,6 @@ import io
 from PIL import Image as PilImage
 from django.core.files.base import ContentFile
 from django.db import models
-from django.utils.text import slugify
 
 class Menu(models.Model):
     text = models.CharField(max_length = 100)
@@ -11,15 +10,10 @@ class Menu(models.Model):
     is_button = models.BooleanField(default = False)
     order = models.PositiveIntegerField(default = 0)
     is_active = models.BooleanField(default = True)
-    slug = models.SlugField(unique = True, max_length = 50, null = True, blank = True)
 
     def __str__(self):
         return self.text
-        
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.text)
-        super().save(*args, **kwargs)
+
 
 class Footer(models.Model):
     name = models.CharField(max_length=200)

@@ -3,14 +3,12 @@ from .models import Menu, Footer, QuickLink, FooterText
 
 
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ('text', 'url', 'is_button', 'order', 'is_active', 'slug')
-    search_fields = ('text', 'url', 'slug')
+    list_display = ('text', 'url', 'is_button', 'order', 'is_active')
+    search_fields = ('text', 'url')
     list_filter = ('is_active', 'is_button')
-    prepopulated_fields = {"slug": ("text",)}
     ordering = ('order',)
     list_editable = ('is_active', 'order', 'is_button')
-    fields = ('text', 'url', 'is_button', 'order', 'is_active', 'slug')
-    readonly_fields = ('slug',)
+    fields = ('text', 'url', 'is_button', 'order', 'is_active')
 
 class FooterAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone_number', 'address', 'copyright_text')
