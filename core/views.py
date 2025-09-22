@@ -41,18 +41,12 @@ class HeaderFooterView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-
-class SectionContentPagination(PageNumberPagination):
-    page_size = 10
-    page_size_query_param = 'page_size'
-    max_page_size = 100
-
 @method_decorator(cache_page(60 * 15), name='dispatch')
 class PageSectionContentView(generics.ListAPIView):
     queryset = PageSection.objects.prefetch_related('content_items').order_by('order')
     serializer_class = PageSectionSerializer
-    pagination_class = SectionContentPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        
         return queryset.filter(is_active=True)
