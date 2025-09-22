@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Menu, Footer, QuickLink, FooterText
+from .models import Menu, Footer, QuickLink, FooterText, PageSection, SectionContent
 
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +31,18 @@ class HeaderFooterSerializer(serializers.Serializer):
     
     quick_links = QuickLinkSerializer(many=True)
     made_with_text = FooterTextSerializer()
+
+
+class SectionContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SectionContent
+        fields = ('id', 'title', 'description', 'instagram_url', 'twitter_url', 'facebook_url', 'image', 'order', 'is_active')
+
+class PageSectionSerializer(serializers.ModelSerializer):
+    content_items = SectionContentSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = PageSection
+        fields = ('id', 'section_type', 'order', 'is_active', 'heading', 'subheading', 'description', 
+                  'background_image', 'primary_image', 'primary_button_text', 'primary_button_url', 
+                  'secondary_button_text', 'secondary_button_url', 'content_items')

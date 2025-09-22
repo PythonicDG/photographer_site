@@ -1,8 +1,21 @@
+from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Menu, Footer, QuickLink, FooterText
-from .serializers import HeaderFooterSerializer, QuickLinkSerializer, FooterTextSerializer, MenuSerializer, FooterSerializer
+from rest_framework.pagination import PageNumberPagination
+from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+
+from .models import Menu, Footer, QuickLink, FooterText, PageSection, SectionContent
+
+from .serializers import (
+    HeaderFooterSerializer,
+    QuickLinkSerializer,
+    FooterTextSerializer,
+    MenuSerializer,
+    FooterSerializer,
+    PageSectionSerializer,
+)
 
 class HeaderFooterView(APIView):
     def get(self, request, *args, **kwargs):
@@ -26,3 +39,20 @@ class HeaderFooterView(APIView):
         }
         
         return Response(data, status=status.HTTP_200_OK)
+
+
+
+class SectionContentPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+@method_decorator(cache_page(60 * 15), name='dispatch')
+class PageSectionContentView(generics.ListAPIView):
+    queryset = PageSection.objects.prefetch_related('content_items').order_by('order')
+    serializer_class = PageSectionSerializer
+    pagination_class = SectionContentPagination
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(is_active=True)
