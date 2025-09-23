@@ -20,7 +20,10 @@ class Footer(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     address = models.CharField(max_length=255)
-    logo = models.ImageField(upload_to = 'logo/', blank = True, null = True)
+    image1 = models.ImageField(upload_to = 'footer-images/', blank = True, null = True)
+    image2 = models.ImageField(upload_to = 'footer-images/', blank = True, null = True)
+    image3 = models.ImageField(upload_to = 'footer-images/', blank = True, null = True)
+    image4 = models.ImageField(upload_to = 'footer-images/', blank = True, null = True)
     facebook_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)
@@ -30,6 +33,24 @@ class Footer(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        def convert_to_webp(image_field):
+            if image_field and hasattr(image_field, 'file'):
+                image = PilImage.open(image_field.file)
+                image_io = io.BytesIO()
+                image.save(image_io, format = 'WEBP', quality = 85)
+                image_io.seek(0)
+                file_name = os.path.splitext(os.path.basename(image_field.name))[0]
+                new_file_name = f"{file_name}.webp"
+                image_field.save(new_file_name, ContentFile(image_io.read()), save = False)
+
+        convert_to_webp(self.image1)
+        convert_to_webp(self.image2)
+        convert_to_webp(self.image3)
+        convert_to_webp(self.image4)
+
+        super().save(*args, **kwargs)
 
 class QuickLink(models.Model):
     name = models.CharField(max_length=100)
