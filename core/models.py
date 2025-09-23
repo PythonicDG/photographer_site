@@ -20,7 +20,7 @@ class Footer(models.Model):
     email = models.EmailField()
     phone_number = models.CharField(max_length=15)
     address = models.CharField(max_length=255)
-    
+    logo = models.ImageField(upload_to = 'logo/', blank = True, null = True)
     facebook_url = models.URLField(blank=True, null=True)
     instagram_url = models.URLField(blank=True, null=True)
     linkedin_url = models.URLField(blank=True, null=True)

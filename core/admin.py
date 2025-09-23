@@ -12,7 +12,7 @@ class MenuAdmin(admin.ModelAdmin):
 class FooterAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'phone_number', 'address', 'copyright_text')
     search_fields = ('name', 'email')
-    fields = ('name', 'email', 'phone_number', 'address', 'facebook_url', 'instagram_url', 'linkedin_url', 'copyright_text')
+    fields = ('name', 'email', 'phone_number', 'address', 'logo', 'facebook_url', 'instagram_url', 'linkedin_url', 'copyright_text')
     readonly_fields = ('created_at',)
     ordering = ('name',)
 

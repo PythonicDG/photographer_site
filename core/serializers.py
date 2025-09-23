@@ -11,7 +11,7 @@ class FooterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Footer
         fields = (
-            'id', 'name', 'email', 'phone_number', 'address', 
+            'id', 'name', 'email', 'phone_number', 'address', 'logo',
             'facebook_url', 'instagram_url', 'linkedin_url', 'copyright_text'
         )
 
