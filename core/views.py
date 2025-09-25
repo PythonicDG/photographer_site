@@ -41,7 +41,7 @@ class HeaderFooterView(APIView):
         return Response(data, status=status.HTTP_200_OK)
 
 
-@method_decorator(cache_page(60 * 15), name='dispatch')
+@method_decorator(cache_page(5), name='dispatch')
 class PageSectionContentView(generics.ListAPIView):
     queryset = PageSection.objects.prefetch_related('content_items').order_by('order')
     serializer_class = PageSectionSerializer
