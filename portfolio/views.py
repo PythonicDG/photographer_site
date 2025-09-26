@@ -6,14 +6,14 @@ from rest_framework.pagination import PageNumberPagination
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
 
-from .models import PageSection, SectionContent
+from .models import PageSection, SectionContent, Album
 
 from .serializers import (
-    PageSectionSerializer,
+    PageSectionSerializer, AlbumSerializer
 )
 
 
-@method_decorator(cache_page(60 * 15), name='dispatch')
+@method_decorator(cache_page(5), name='dispatch')
 class PageSectionContentView(generics.ListAPIView):
     queryset = PageSection.objects.prefetch_related('content_items').order_by('order')
     serializer_class = PageSectionSerializer
@@ -22,3 +22,9 @@ class PageSectionContentView(generics.ListAPIView):
         queryset = super().get_queryset()
         
         return queryset.filter(is_active=True)
+
+@method_decorator(cache_page(5), name='dispatch')
+class Album(generics.RetrieveAPIView):
+    queryset = Album.objects.filter(is_active = True)
+    serializer_class = AlbumSerializer
+    lookup_field = 'slug'

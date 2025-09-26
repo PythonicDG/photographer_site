@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PageSection, SectionContent
+from .models import PageSection, SectionContent, Album, AlbumPhoto
 
 
 class SectionContentInline(admin.TabularInline):
@@ -31,3 +31,29 @@ class SectionContentAdmin(admin.ModelAdmin):
     list_filter = ('section', 'is_active')
     search_fields = ('title', 'description')
     ordering = ('order',)
+
+
+class AlbumPhotoInline(admin.TabularInline):
+    model = AlbumPhoto
+    extra = 1
+    fields = ('image', 'is_active')
+    show_change_link = True
+
+@admin.register(Album)
+class AlbumAdmin(admin.ModelAdmin):
+    list_display = ['name', 'heading', 'order', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['name', 'heading', 'description']
+    ordering = ['order']
+    inlines = [AlbumPhotoInline]
+
+    fieldsets = (
+        (None, {'fields': ('name', 'heading', 'description','slug', 'order', 'is_active')}),
+        ('Cover Image', {'fields': ('cover_image',)}),
+    )
+
+@admin.register(AlbumPhoto)
+class AlbumPhotoAdmin(admin.ModelAdmin):
+    list_display = ('id', 'album', 'is_active')
+    list_filter = ('album', 'is_active')
+    ordering = ('album', 'id')

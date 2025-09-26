@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PageSection, SectionContent
+from .models import PageSection, SectionContent, Album, AlbumPhoto
 
 
 class SectionContentSerializer(serializers.ModelSerializer):
@@ -21,3 +21,15 @@ class PageSectionSerializer(serializers.ModelSerializer):
             'secondary_button_text', 'secondary_button_url',
             'content_items'
         )
+
+class AlbumPhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AlbumPhoto
+        fields = ['id', 'image', 'is_active']
+
+class AlbumSerializer(serializers.ModelSerializer):
+    photos = AlbumPhotoSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Album
+        fields = ['id', 'name', 'slug', 'heading', 'description', 'cover_image', 'order', 'is_active', 'photos']
