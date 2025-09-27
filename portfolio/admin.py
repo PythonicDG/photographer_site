@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PageSection, SectionContent, Album, AlbumPhoto
+from .models import PageSection, SectionContent, Category, AlbumPhoto
 
 
 class SectionContentInline(admin.TabularInline):
@@ -21,7 +21,7 @@ class PageSectionAdmin(admin.ModelAdmin):
         (None, {'fields': ('section_type', 'order', 'is_active', 'heading', 'subheading', 'description')}),
         ('Images', {'fields': ('background_image', 'primary_image')}),
         ('Buttons', {'fields': ('primary_button_text', 'primary_button_url', 
-                                'secondary_button_text', 'secondary_button_url')}),
+                                'secondary_button_text', 'secondary_button_url')}), 
     )
 
 
@@ -39,8 +39,9 @@ class AlbumPhotoInline(admin.TabularInline):
     fields = ('image', 'is_active')
     show_change_link = True
 
-@admin.register(Album)
-class AlbumAdmin(admin.ModelAdmin):
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'heading', 'order', 'is_active']
     list_filter = ['is_active']
     search_fields = ['name', 'heading', 'description']
@@ -48,12 +49,13 @@ class AlbumAdmin(admin.ModelAdmin):
     inlines = [AlbumPhotoInline]
 
     fieldsets = (
-        (None, {'fields': ('name', 'heading', 'description','slug', 'order', 'is_active')}),
+        (None, {'fields': ('name', 'slug', 'heading', 'description', 'view_more_url', 'order', 'is_active')}),
         ('Cover Image', {'fields': ('cover_image',)}),
     )
 
+
 @admin.register(AlbumPhoto)
 class AlbumPhotoAdmin(admin.ModelAdmin):
-    list_display = ('id', 'album', 'is_active')
-    list_filter = ('album', 'is_active')
-    ordering = ('album', 'id')
+    list_display = ('id', 'category', 'is_active')
+    list_filter = ('category', 'is_active')
+    ordering = ('category', 'id')
