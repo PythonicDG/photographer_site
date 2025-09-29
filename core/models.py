@@ -127,6 +127,9 @@ class SectionContent(models.Model):
     facebook_url = models.CharField(max_length = 200, blank = True, null = True)
     image = models.ImageField(upload_to = 'images/', blank = True, null = True)
 
+    button_text = models.CharField(max_length = 50, blank = True, null = True)
+    button_url = models.CharField(max_length = 200, blank = True, null = True)
+
     class Meta:
         ordering = ['section', 'order']
 
