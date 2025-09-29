@@ -29,7 +29,7 @@ class FooterTextAdmin(admin.ModelAdmin):
 class SectionContentInline(admin.TabularInline):
     model = SectionContent
     extra = 0
-    fields = ('title', 'description', 'order', 'instagram_url', 'twitter_url', 'facebook_url', 'image', 'is_active')
+    fields = ('title', 'description', 'order', 'instagram_url', 'twitter_url', 'facebook_url', 'button_text','button_url', 'image', 'is_active')
     show_change_link = True
 
 class SectionContentAdmin(admin.ModelAdmin):
@@ -37,7 +37,7 @@ class SectionContentAdmin(admin.ModelAdmin):
     search_fields = ('title', 'description')
     list_filter = ('is_active', 'section', 'order')
     ordering = ('order',)
-    fields = ('section', 'title', 'description', 'instagram_url', 'twitter_url', 'facebook_url', 'image', 'order', 'is_active')
+    fields = ('section', 'title', 'description', 'instagram_url', 'twitter_url', 'facebook_url', 'button_text', 'button_url','image', 'order', 'is_active')
     readonly_fields = ('section',)
 
 class PageSectionAdmin(admin.ModelAdmin):
