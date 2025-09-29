@@ -19,8 +19,14 @@ class PageSectionContentView(generics.ListAPIView):
         return queryset.filter(is_active=True)
 
 
+class CategoryPagination(PageNumberPagination):
+    page_size = 10
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 @method_decorator(cache_page(5), name='dispatch')
-class Album(generics.RetrieveAPIView):
+class Album(generics.ListAPIView):
     queryset = Category.objects.filter(is_active=True)
     serializer_class = AlbumCategorySerializer
+    pagination_class = CategoryPagination
     lookup_field = 'slug'
