@@ -36,7 +36,7 @@ class HeaderFooterSerializer(serializers.Serializer):
 class SectionContentSerializer(serializers.ModelSerializer):
     class Meta:
         model = SectionContent
-        fields = ('id', 'title', 'description', 'instagram_url', 'twitter_url', 'facebook_url', 'image', 'order', 'is_active')
+        fields = ('id', 'title', 'description', 'instagram_url', 'twitter_url', 'facebook_url', 'button_text', 'button_url','image', 'order', 'is_active')
 
 class PageSectionSerializer(serializers.ModelSerializer):
     content_items = SectionContentSerializer(many=True, read_only=True)
